@@ -1,3 +1,4 @@
+
 // src/pages/Dashboard.jsx
 import React, { useEffect, useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
@@ -69,3 +70,4 @@ export default function Dashboard() {
     </div>
   )
 }
+
