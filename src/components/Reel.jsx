@@ -25,6 +25,23 @@ export default function Reel({ reel: initialReel, onOpenComments }) {
       console.error('like failed', e)
     }
   }
+// In src/components/Reel.jsx (add analytics import)
+import { analyticsService } from '../services/analyticsService'
+
+// inside useEffect or on play events:
+useEffect(() => {
+  // when video starts playing
+  const v = videoRef.current
+  if (!v) return
+  const onPlay = () => analyticsService.logEvent('impression', { reelId: initialReel.id })
+  const onEnded = () => analyticsService.logEvent('watchComplete', { reelId: initialReel.id })
+  v.addEventListener('play', onPlay)
+  v.addEventListener('ended', onEnded)
+  return () => {
+    v.removeEventListener('play', onPlay)
+    v.removeEventListener('ended', onEnded)
+  }
+}, [initialReel.id])
 
   return (
     <div className="h-screen flex items-end justify-start p-4 box-border relative">
